@@ -13,10 +13,19 @@ namespace E_Commerce.Services
             _dbContext = dbContext;
         }
 
-        public void AddCatagories(Categories categories)
+        public void AddCatagories(CategoriesRequestModel categories)
         {
-            
-            _dbContext.Categories.Add(categories);
+            var category = _dbContext.MainCategories.FirstOrDefault(c => c.Name == categories.MainCatagories);
+            var model = new Categories
+            {
+                Name = categories.Name,
+                Desc = categories.Desc,
+                MainCatagories = categories.MainCatagories,
+                MainCategoriesId = category.Id,
+                Status = true,
+
+            };
+            _dbContext.Categories.Add(model);
             _dbContext.SaveChanges();
         }
 

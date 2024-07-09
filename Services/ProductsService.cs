@@ -1,5 +1,6 @@
 ﻿using E_Commerce.DataAccess.Contexts;
 using E_Commerce.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -25,26 +26,101 @@ namespace E_Commerce.Services
                 Categories=product.Categories,
                 CategoriesId = category.Id,
                 Images = product.Images,
-                Status=true,
+                Properties = product.Property?.Select(propertyId => new ProductsProperties
+                {
+                    ProductId = product.Id, 
+                    PropertyId = propertyId
+                }).ToList(),
+                Status =true,
 
             };
+
+           
             _dbContext.Products.Add(model);
             _dbContext.SaveChanges();
             
         }
 
-        public IEnumerable<Products> GetProducts()
+        public ActionResult<IEnumerable<object>> GetAllProducts()
         {
-            return _dbContext.Products
-                  .Include(p => p.Images)
-                  .ToList();
+            var products = _dbContext.Products
+                .Include(p => p.Images)
+                .Include(p => p.Properties)
+                    .ThenInclude(pp => pp.Property)
+                .ToList();
+
+            var response = products.Select(product => new
+            {
+                id = product.Id,
+                status = product.Status,
+                name = product.Name,
+                desc = product.Desc,
+                price = product.Price,
+                categoriesId = product.CategoriesId,
+                categories = product.Categories,
+                images = product.Images.Select(i => new
+                {
+                    id = i.Id,
+                    status = i.Status,
+                    url = i.Url
+                }).ToList(),
+                properties = product.Properties.Select(pp => new
+                {
+                    productId = pp.ProductId,
+                    propertyId = pp.PropertyId,
+                    property = new
+                    {
+                        id = pp.Property.Id,
+                        status = pp.Property.Status,
+                        propertyName = pp.Property.PropertyName
+                    }
+                }).ToList()
+            }).ToList();
+
+            return response;
         }
 
-        public Products GetProductById(int id)
+
+
+        public ActionResult<object> GetProductById(int id)
         {
-            return _dbContext.Products
-                   .Include(p => p.Images)
-                   .FirstOrDefault(p => p.Id == id);
+            var product = _dbContext.Products
+                .Include(p => p.Images)
+                .Include(p => p.Properties)
+                    .ThenInclude(pp => pp.Property)
+                .SingleOrDefault(p => p.Id == id);
+
+            
+            // Veritabanı sorgusundan gelen veriyi temizleme
+            var response = new
+            {
+                id = product.Id,
+                status = product.Status,
+                name = product.Name,
+                desc = product.Desc,
+                price = product.Price,
+                categoriesId = product.CategoriesId,
+                categories = product.Categories,
+                images = product.Images.Select(i => new
+                {
+                    id = i.Id,
+                    status = i.Status,
+                    url = i.Url
+                }).ToList(),
+                properties = product.Properties.Select(pp => new
+                {
+                    productId = pp.ProductId,
+                    propertyId = pp.PropertyId,
+                    property = new
+                    {
+                        id = pp.Property.Id,
+                        status = pp.Property.Status,
+                        propertyName = pp.Property.PropertyName
+                    }
+                }).ToList()
+            };
+
+            return response;
         }
 
 

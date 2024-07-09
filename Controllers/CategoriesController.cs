@@ -14,7 +14,7 @@ namespace E_Commerce.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCategories(Categories categories)
+        public IActionResult AddCategories(CategoriesRequestModel categories)
         {
             categories.Status=true;
             _categoriesService.AddCatagories(categories);

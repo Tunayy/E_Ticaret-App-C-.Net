@@ -25,7 +25,7 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            var products = _productService.GetProducts(); 
+            var products = _productService.GetAllProducts(); 
             return Ok(products);
         }
 

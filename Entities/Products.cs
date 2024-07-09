@@ -1,4 +1,5 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace E_Commerce.Entities
 {
@@ -15,6 +16,8 @@ namespace E_Commerce.Entities
         public String Categories { get; set; }
 
         public ICollection<Images> Images { get; set; }
+
+        public ICollection<ProductsProperties> Properties { get; set; }
     }
 
     public class ProductRequestModel
@@ -24,6 +27,8 @@ namespace E_Commerce.Entities
         public string Desc { get; set; }
         public int Price { get; set; }
         public string Categories { get; set; }
+        
+        public ICollection<int> Property { get; set; }
         public ICollection<Images> Images { get; set; }
     }
 
@@ -34,6 +39,6 @@ namespace E_Commerce.Entities
         public string Desc { get; set; }
         public int Price { get; set; }
         public string Categories { get; set; }
-        
+
     }
 }

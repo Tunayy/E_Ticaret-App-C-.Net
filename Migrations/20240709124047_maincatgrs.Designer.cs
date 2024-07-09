@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.Migrations
 {
     [DbContext(typeof(ECommerceDbContext))]
-    [Migration("20240704141053_AddStatusToProducts")]
-    partial class AddStatusToProducts
+    [Migration("20240709124047_maincatgrs")]
+    partial class maincatgrs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,12 @@ namespace E_Commerce.Migrations
                     b.Property<string>("Desc")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MainCatagories")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MainCategoriesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -42,6 +48,8 @@ namespace E_Commerce.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MainCategoriesId");
 
                     b.ToTable("Categories");
                 });
@@ -71,6 +79,28 @@ namespace E_Commerce.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.MainCategories", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Desc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainCategories");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.Products", b =>
@@ -106,6 +136,71 @@ namespace E_Commerce.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("E_Commerce.Entities.ProductsProperties", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PropertyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "PropertyId");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("ProductsProperties");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.Properties", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("PropertyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Properties");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.Categories", b =>
+                {
+                    b.HasOne("E_Commerce.Entities.MainCategories", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("MainCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("E_Commerce.Entities.Images", b =>
                 {
                     b.HasOne("E_Commerce.Entities.Products", null)
@@ -124,14 +219,45 @@ namespace E_Commerce.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("E_Commerce.Entities.ProductsProperties", b =>
+                {
+                    b.HasOne("E_Commerce.Entities.Products", "Product")
+                        .WithMany("Properties")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Commerce.Entities.Properties", "Property")
+                        .WithMany("Products")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Property");
+                });
+
             modelBuilder.Entity("E_Commerce.Entities.Categories", b =>
                 {
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("E_Commerce.Entities.MainCategories", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("E_Commerce.Entities.Products", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.Properties", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

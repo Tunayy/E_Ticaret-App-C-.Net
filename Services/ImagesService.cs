@@ -1,5 +1,6 @@
 ﻿using E_Commerce.DataAccess.Contexts;
 using E_Commerce.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce.Services
@@ -33,6 +34,7 @@ namespace E_Commerce.Services
         {
             return _dbContext.Images.ToList();
         }
+
 
         public Images GetImagesById(int id)
         {
