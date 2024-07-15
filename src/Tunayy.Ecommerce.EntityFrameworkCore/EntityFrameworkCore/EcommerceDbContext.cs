@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using Tunayy.Ecommerce.Tables;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -58,8 +60,10 @@ public class EcommerceDbContext :
 
     public DbSet<Test> Tests { get; set; }
     public DbSet<TestTwo> TestTwos { get; set; }
+    
+ 
 
-
+    public DbSet<Category> Categories { get; set; }
 
     public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options)
         : base(options)
@@ -90,5 +94,13 @@ public class EcommerceDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+        builder.Entity<Category>(b =>
+        {
+            b.ToTable(CategoryConst.DbTablePrefix + "Categories", CategoryConst.DbSchema);
+            b.ConfigureByConvention(); 
+            b.HasOne(c => c.ParentCategory)
+                .WithMany(c => c.SubCategories)
+                .HasForeignKey(c => c.ParentCategoryId);
+        });
     }
 }
