@@ -64,6 +64,7 @@ public class EcommerceDbContext :
  
 
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
 
     public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options)
         : base(options)

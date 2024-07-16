@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunayy.Ecommerce.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Tunayy.Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceDbContext))]
-    partial class EcommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240714154155_recursivemig3")]
+    partial class recursivemig3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +76,55 @@ namespace Tunayy.Ecommerce.Migrations
                     b.ToTable("AppCategories", (string)null);
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.Product", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.MainCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("mainCategories");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.SubCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -115,18 +166,18 @@ namespace Tunayy.Ecommerce.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
+                    b.Property<Guid>("MainCategoryGuid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("subCategories");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Test", b =>
@@ -2030,10 +2081,10 @@ namespace Tunayy.Ecommerce.Migrations
                     b.Navigation("ParentCategory");
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.Product", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.SubCategory", b =>
                 {
-                    b.HasOne("Tunayy.Ecommerce.Tables.Category", "Category")
-                        .WithMany("Products")
+                    b.HasOne("Tunayy.Ecommerce.Tables.MainCategory", "Category")
+                        .WithMany("Categories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2196,9 +2247,12 @@ namespace Tunayy.Ecommerce.Migrations
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Category", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.MainCategory", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Test", b =>

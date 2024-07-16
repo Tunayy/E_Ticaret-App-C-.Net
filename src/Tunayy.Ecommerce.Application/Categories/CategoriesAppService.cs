@@ -25,6 +25,8 @@ namespace Tunayy.Ecommerce.Categories
             query = query.Include(x => x.SubCategories)
                 .ThenInclude(k => k.SubCategories);
 
+            
+            
             var result = await query.FirstOrDefaultAsync(i => i.Id == id);
             return result!;
         }
