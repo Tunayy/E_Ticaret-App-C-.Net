@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
-namespace Tunayy.Ecommerce.Products
+namespace Tunayy.Ecommerce.Images
 {
-    public class FilterProductsInputDto : PagedAndSortedResultRequestDto
+    public class FilterImageInputDto : PagedAndSortedResultRequestDto
     {
     }
 }

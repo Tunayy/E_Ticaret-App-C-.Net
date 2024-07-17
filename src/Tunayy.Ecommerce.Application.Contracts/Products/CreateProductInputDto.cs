@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tunayy.Ecommerce.Products
 {
-    public class UpdateProductsInputDto
+    public class CreateProductInputDto
     {
         public string Name { get; set; }
         public string Desc { get; set; }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Tunayy.Ecommerce.Categories;
+using Tunayy.Ecommerce.Images;
 using Tunayy.Ecommerce.Products;
 using Tunayy.Ecommerce.Tables;
 using Tunayy.Ecommerce.Tests;
@@ -28,9 +29,14 @@ public class EcommerceApplicationAutoMapperProfile : Profile
         CreateMap<CreateCategoriesInputDto, Category>();
         CreateMap<UpdateCategoriesInputDto, Category>();
 
-        CreateMap<Product, ProductsDto>().ReverseMap();
-        CreateMap<Product, ProductsListDto>().ReverseMap();
-        CreateMap<CreateProductsInputDto, Product>();
-        CreateMap<UpdateProductsInputDto, Product>();
+        CreateMap<Product, ProductDto>().ReverseMap();
+        CreateMap<Product, ProductListDto>().ReverseMap();
+        CreateMap<CreateProductInputDto, Product>();
+        CreateMap<UpdateProductInputDto, Product>();
+
+        CreateMap<Image, ImageDto>().ReverseMap();
+        CreateMap<Image, ImageListDto>().ReverseMap();
+        CreateMap<CreateImageInputDto, Image>();
+        CreateMap<UpdateImageInputDto, Image>();
     }
 }
