@@ -7,11 +7,11 @@ using Volo.Abp.Application.Dtos;
 
 namespace Tunayy.Ecommerce.Categories
 {
-    public class CategoriesDto : FullAuditedEntityDto<Guid>
+    public class CategoryDto : FullAuditedEntityDto<Guid>
     {
         public string Name { get; set; }
         public Guid Id { get; set; }
         public Guid? ParentCategoryId { get; set; }
-        public List<CategoriesDto> SubCategories { get; set; }
+        public List<CategoryDto> SubCategories { get; set; }
     }
 }
