@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Tunayy.Ecommerce.Categories
 {
-    public class CategoriesAppService : CrudAppService<Category, CategoriesDto, CategoriesListDto,Guid, FilterCategoriesInputDto, CreateCategoriesInputDto, UpdateCategoriesInputDto>, ICategoriesAppService
+    public class CategoriesAppService : CrudAppService<Category, CategoryDto, CategoryListDto,Guid, FilterCategoryInputDto, CreateCategoryInputDto, UpdateCategoryInputDto>, ICategoryAppService
     {
         public CategoriesAppService(IRepository<Category, Guid> repository) : base(repository)
         {

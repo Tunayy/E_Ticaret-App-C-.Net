@@ -9,7 +9,7 @@ using Volo.Abp.Application.Services;
 
 namespace Tunayy.Ecommerce.Categories
 {
-    public interface ICategoriesAppService : ICrudAppService<CategoriesDto, CategoriesListDto, Guid, FilterCategoriesInputDto, CreateCategoriesInputDto, UpdateCategoriesInputDto>
+    public interface ICategoryAppService : ICrudAppService<CategoryDto, CategoryListDto, Guid, FilterCategoryInputDto, CreateCategoryInputDto, UpdateCategoryInputDto>
     {
     }
 }

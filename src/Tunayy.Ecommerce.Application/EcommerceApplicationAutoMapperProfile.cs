@@ -24,10 +24,10 @@ public class EcommerceApplicationAutoMapperProfile : Profile
 
         CreateMap<TestTwo, TestTwoInTest>();
 
-        CreateMap<Category, CategoriesDto>().ReverseMap();
-        CreateMap<Category, CategoriesListDto>().ReverseMap();
-        CreateMap<CreateCategoriesInputDto, Category>();
-        CreateMap<UpdateCategoriesInputDto, Category>();
+        CreateMap<Category, CategoryDto>().ReverseMap();
+        CreateMap<Category, CategoryListDto>().ReverseMap();
+        CreateMap<CreateCategoryInputDto, Category>();
+        CreateMap<UpdateCategoryInputDto, Category>();
 
         CreateMap<Product, ProductDto>().ReverseMap();
         CreateMap<Product, ProductListDto>().ReverseMap();
