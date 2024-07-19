@@ -12,5 +12,6 @@ namespace Tunayy.Ecommerce.Products
         public string Desc { get; set; }
         public int Price { get; set; }
         public Guid CategoryId { get; set; }
+        
     }
 }

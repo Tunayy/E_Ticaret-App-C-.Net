@@ -17,5 +17,7 @@ namespace Tunayy.Ecommerce.Tables
 
         public List<Image> Images { get; set; }
 
+        public List<ProductProperty> Properties { get; set; }
+
     }
 }

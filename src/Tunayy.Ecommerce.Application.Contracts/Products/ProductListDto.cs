@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tunayy.Ecommerce.Images;
+using Tunayy.Ecommerce.Properties;
 
 namespace Tunayy.Ecommerce.Products
 {
@@ -16,5 +17,7 @@ namespace Tunayy.Ecommerce.Products
         public Guid CategoryId { get; set; }
 
         public List<ImageDto> Images { get; set; }
+
+        public List<ProductPropertyDto> Properties { get; set; }
     }
 }

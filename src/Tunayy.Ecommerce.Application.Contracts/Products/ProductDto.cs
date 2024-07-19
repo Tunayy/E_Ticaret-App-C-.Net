@@ -16,5 +16,7 @@ namespace Tunayy.Ecommerce.Products
         public Guid CategoryId { get; set; }
         public List<ImageDto> Images { get; set; }
 
+        public List<Guid> Properties { get; set; }
+
     }
 }

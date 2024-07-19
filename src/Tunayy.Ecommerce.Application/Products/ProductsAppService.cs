@@ -14,15 +14,17 @@ namespace Tunayy.Ecommerce.Products
 {
     public class ProductsAppService : CrudAppService<Product, ProductDto, ProductListDto, Guid, FilterProductInputDto, CreateProductInputDto, UpdateProductInputDto>, IPdoructAppService
     {
-        public ProductsAppService(IRepository<Product, Guid> repository) : base(repository)
+        private IRepository<ProductProperty> _productPropertyRepository;
+        public ProductsAppService(IRepository<Product, Guid> repository, IRepository<ProductProperty> productPropertyRepository) : base(repository)
         {
-
+            _productPropertyRepository = productPropertyRepository;
         }
 
         public override async Task<PagedResultDto<ProductListDto>> GetListAsync(FilterProductInputDto input)
         {
             var query = await ReadOnlyRepository.GetQueryableAsync();
-            query = query.Include(x => x.Images);
+            query = query.Include(x => x.Images)
+                .Include(x => x.Properties).ThenInclude(x=>x.Property);
             var result = await query.ToListAsync();
             return await base.GetListAsync(input);
         }
@@ -36,6 +38,15 @@ namespace Tunayy.Ecommerce.Products
             return result!;
         }
 
+        public async Task CreateProductProperty(CreateProductPropertyInputDto input)
+        {
+            var item=new ProductProperty();
+            item.ProductId = input.ProductId;
+            item.PropertyId = input.PropertyId;
 
+            await _productPropertyRepository.InsertAsync(item);
+        }
+
+        
     }
 }
