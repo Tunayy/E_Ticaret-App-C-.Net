@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Tunayy.Ecommerce.Migrations
 {
     /// <inheritdoc />
-    public partial class propertymig2 : Migration
+    public partial class mig1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -412,7 +412,7 @@ namespace Tunayy.Ecommerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppCategories",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -428,11 +428,11 @@ namespace Tunayy.Ecommerce.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppCategories", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppCategories_AppCategories_ParentCategoryId",
+                        name: "FK_Categories_Categories_ParentCategoryId",
                         column: x => x.ParentCategoryId,
-                        principalTable: "AppCategories",
+                        principalTable: "Categories",
                         principalColumn: "Id");
                 });
 
@@ -791,9 +791,9 @@ namespace Tunayy.Ecommerce.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_AppCategories_CategoryId",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "AppCategories",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1197,8 +1197,8 @@ namespace Tunayy.Ecommerce.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppCategories_ParentCategoryId",
-                table: "AppCategories",
+                name: "IX_Categories_ParentCategoryId",
+                table: "Categories",
                 column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
@@ -1376,7 +1376,7 @@ namespace Tunayy.Ecommerce.Migrations
                 name: "OpenIddictApplications");
 
             migrationBuilder.DropTable(
-                name: "AppCategories");
+                name: "Categories");
         }
     }
 }

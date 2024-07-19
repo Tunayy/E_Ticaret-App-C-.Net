@@ -99,7 +99,6 @@ public class EcommerceDbContext :
         //});
         builder.Entity<Category>(b =>
         {
-            b.ToTable(CategoryConst.DbTablePrefix + "Categories", CategoryConst.DbSchema);
             b.ConfigureByConvention(); 
             b.HasOne(c => c.ParentCategory)
                 .WithMany(c => c.SubCategories)

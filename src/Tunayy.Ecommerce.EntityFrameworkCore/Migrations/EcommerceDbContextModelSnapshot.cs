@@ -70,7 +70,7 @@ namespace Tunayy.Ecommerce.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("AppCategories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Image", b =>

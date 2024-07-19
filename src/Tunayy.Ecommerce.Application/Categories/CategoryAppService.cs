@@ -2,11 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Tunayy.Ecommerce.Products;
 using Tunayy.Ecommerce.Tables;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
@@ -19,19 +16,6 @@ namespace Tunayy.Ecommerce.Categories
             
         }
 
-        //protected override async Task<IQueryable<CategoryDto>> CreateFilteredQueryAsync(CategoryListDto input)
-        //{
-        //    return await ReadOnlyRepository.GetQueryableAsync();
-        //}
-        public override async Task<PagedResultDto<CategoryListDto>> GetListAsync(FilterCategoryInputDto input)
-        {
-            var query = await ReadOnlyRepository.GetQueryableAsync();
-            query = query
-                .Include(p => p.Products)
-                .ThenInclude(p => p.Images);
-            var result = await query.ToListAsync();
-            return await base.GetListAsync(input);
-        }
 
         protected override async Task<Category> GetEntityByIdAsync(Guid id)
         {

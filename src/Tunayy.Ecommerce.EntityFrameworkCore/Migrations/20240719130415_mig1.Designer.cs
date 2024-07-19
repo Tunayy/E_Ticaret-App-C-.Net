@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Tunayy.Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceDbContext))]
-    [Migration("20240719104053_propertymig2")]
-    partial class propertymig2
+    [Migration("20240719130415_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,7 @@ namespace Tunayy.Ecommerce.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("AppCategories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Image", b =>
