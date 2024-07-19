@@ -15,6 +15,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Tunayy.Ecommerce.EntityFrameworkCore;
 
@@ -60,11 +61,13 @@ public class EcommerceDbContext :
 
     public DbSet<Test> Tests { get; set; }
     public DbSet<TestTwo> TestTwos { get; set; }
-    
- 
 
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Image> Images { get; set; }
 
+    public DbSet<Property> Properties { get; set; }
+    public DbSet<ProductProperty> ProductsProperties { get; set; }
     public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options)
         : base(options)
     {
@@ -101,5 +104,18 @@ public class EcommerceDbContext :
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId);
         });
+
+        builder.Entity<ProductProperty>()
+          .HasKey(pp => new { pp.ProductId, pp.PropertyId });
+
+        builder.Entity<ProductProperty>()
+            .HasOne(pp => pp.Product)
+            .WithMany(p => p.Properties)
+            .HasForeignKey(pp => pp.ProductId);
+
+        builder.Entity<ProductProperty>()
+            .HasOne(pp => pp.Property)
+            .WithMany(p => p.Products)
+            .HasForeignKey(pp => pp.PropertyId);
     }
 }

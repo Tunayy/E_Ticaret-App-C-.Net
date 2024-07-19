@@ -23,7 +23,10 @@ namespace Tunayy.Ecommerce.Categories
 
             // Ana kategoriye ait alt kategorileri de dahil etmek için Include kullanabiliriz.
             query = query.Include(x => x.SubCategories)
-                .ThenInclude(k => k.SubCategories);
+                .ThenInclude(p => p.Products)
+                .ThenInclude(p => p.Images); 
+
+
 
             var result = await query.FirstOrDefaultAsync(i => i.Id == id);
             return result!;

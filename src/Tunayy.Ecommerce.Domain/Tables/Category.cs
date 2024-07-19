@@ -16,6 +16,8 @@ namespace Tunayy.Ecommerce.Tables
 
         public List<Category> SubCategories { get; set; }
 
+        public List<Product> Products { get; set; }
+
         //public Category()
         //{
         //    SubCategories = new List<Category>();
