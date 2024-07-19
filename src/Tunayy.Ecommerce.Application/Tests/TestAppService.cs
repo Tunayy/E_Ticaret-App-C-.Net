@@ -17,38 +17,38 @@ public class TestAppService: CrudAppService<Test,TestDto,TestListDto,Guid,Filter
     }
 
 
-    public override async Task<TestDto> GetAsync(Guid id)
-    {
+    //public override async Task<TestDto> GetAsync(Guid id)
+    //{
 
-        await CheckGetPolicyAsync();
+    //    await CheckGetPolicyAsync();
 
-        var entity = await GetEntityByIdAsync(id);
+    //    var entity = await GetEntityByIdAsync(id);
 
-        return await MapToGetOutputDtoAsync(entity);
-    }
-
-
-    protected override async Task<Test> GetEntityByIdAsync(Guid id)
-    {
-        var query = await ReadOnlyRepository.GetQueryableAsync();
-        query = query.Include(x => x.TestTwos);
-
-        var result = await query.FirstOrDefaultAsync(i => i.Id == id);
-        return result!;
-    }
+    //    return await MapToGetOutputDtoAsync(entity);
+    //}
 
 
+    //protected override async Task<Test> GetEntityByIdAsync(Guid id)
+    //{
+    //    var query = await ReadOnlyRepository.GetQueryableAsync();
+    //    query = query.Include(x => x.TestTwos);
+
+    //    var result = await query.FirstOrDefaultAsync(i => i.Id == id);
+    //    return result!;
+    //}
 
 
 
 
-    public override Task<PagedResultDto<TestListDto>> GetListAsync(FilterTestInput input)
-    {
-        return base.GetListAsync(input);
-    }
 
-    protected override Task<IQueryable<Test>> CreateFilteredQueryAsync(FilterTestInput input)
-    {
-        return base.CreateFilteredQueryAsync(input);
-    }
+
+    //public override Task<PagedResultDto<TestListDto>> GetListAsync(FilterTestInput input)
+    //{
+    //    return base.GetListAsync(input);
+    //}
+
+    //protected override Task<IQueryable<Test>> CreateFilteredQueryAsync(FilterTestInput input)
+    //{
+    //    return base.CreateFilteredQueryAsync(input);
+    //}
 }

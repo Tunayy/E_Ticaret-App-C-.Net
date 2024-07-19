@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Tunayy.Ecommerce.Categories;
+using Tunayy.Ecommerce.MainCategories;
 using Tunayy.Ecommerce.Tables;
 using Tunayy.Ecommerce.Tests;
 using Tunayy.Ecommerce.TestTwos;
@@ -20,5 +22,10 @@ public class EcommerceApplicationAutoMapperProfile : Profile
         CreateMap<UpdateTestInput, Test>();
 
         CreateMap<TestTwo, TestTwoInTest>();
+
+        CreateMap<Category, CategoryDto>().ReverseMap();
+        CreateMap<Category, CategoryListDto>().ReverseMap();
+        CreateMap<CreateCategoryInputDto, Category>();
+        CreateMap<UpdateCategoryInputDto, Category>();
     }
 }
