@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunayy.Ecommerce.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Tunayy.Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceDbContext))]
-    partial class EcommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240727163900_variantmig")]
+    partial class variantmig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,55 +291,6 @@ namespace Tunayy.Ecommerce.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductVariants");
-                });
-
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariantImage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<Guid>("ProductVariantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductVariantId");
-
-                    b.ToTable("ProductVariantImages");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Property", b =>
@@ -2288,24 +2242,11 @@ namespace Tunayy.Ecommerce.Migrations
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariant", b =>
                 {
-                    b.HasOne("Tunayy.Ecommerce.Tables.Product", "Product")
+                    b.HasOne("Tunayy.Ecommerce.Tables.Product", null)
                         .WithMany("productVariants")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariantImage", b =>
-                {
-                    b.HasOne("Tunayy.Ecommerce.Tables.ProductVariant", "ProductVariant")
-                        .WithMany("ProductVariantImages")
-                        .HasForeignKey("ProductVariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductVariant");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.PropertyValue", b =>
@@ -2475,11 +2416,6 @@ namespace Tunayy.Ecommerce.Migrations
                     b.Navigation("Properties");
 
                     b.Navigation("productVariants");
-                });
-
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariant", b =>
-                {
-                    b.Navigation("ProductVariantImages");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Property", b =>

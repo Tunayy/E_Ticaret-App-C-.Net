@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Tunayy.Ecommerce.Migrations
 {
     /// <inheritdoc />
-    public partial class mig1 : Migration
+    public partial class prodmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -519,26 +519,6 @@ namespace Tunayy.Ecommerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tests", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AbpAuditLogActions",
                 columns: table => new
                 {
@@ -831,12 +811,12 @@ namespace Tunayy.Ecommerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TestTwos",
+                name: "PropertyValues",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyValueName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -847,11 +827,11 @@ namespace Tunayy.Ecommerce.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestTwos", x => x.Id);
+                    table.PrimaryKey("PK_PropertyValues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TestTwos_Tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "Tests",
+                        name: "FK_PropertyValues_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -906,38 +886,6 @@ namespace Tunayy.Ecommerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductsProperties",
-                columns: table => new
-                {
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductsProperties", x => new { x.ProductId, x.PropertyId });
-                    table.ForeignKey(
-                        name: "FK_ProductsProperties_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductsProperties_Properties_PropertyId",
-                        column: x => x.PropertyId,
-                        principalTable: "Properties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OpenIddictTokens",
                 columns: table => new
                 {
@@ -975,6 +923,42 @@ namespace Tunayy.Ecommerce.Migrations
                         name: "FK_OpenIddictTokens_OpenIddictAuthorizations_AuthorizationId",
                         column: x => x.AuthorizationId,
                         principalTable: "OpenIddictAuthorizations",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductsProperties",
+                columns: table => new
+                {
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyValueId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductsProperties", x => new { x.ProductId, x.PropertyId, x.PropertyValueId });
+                    table.ForeignKey(
+                        name: "FK_ProductsProperties_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductsProperties_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductsProperties_PropertyValues_PropertyValueId",
+                        column: x => x.PropertyValueId,
+                        principalTable: "PropertyValues",
                         principalColumn: "Id");
                 });
 
@@ -1247,9 +1231,14 @@ namespace Tunayy.Ecommerce.Migrations
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestTwos_TestId",
-                table: "TestTwos",
-                column: "TestId");
+                name: "IX_ProductsProperties_PropertyValueId",
+                table: "ProductsProperties",
+                column: "PropertyValueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyValues_PropertyId",
+                table: "PropertyValues",
+                column: "PropertyId");
         }
 
         /// <inheritdoc />
@@ -1340,9 +1329,6 @@ namespace Tunayy.Ecommerce.Migrations
                 name: "ProductsProperties");
 
             migrationBuilder.DropTable(
-                name: "TestTwos");
-
-            migrationBuilder.DropTable(
                 name: "AbpEntityChanges");
 
             migrationBuilder.DropTable(
@@ -1364,10 +1350,7 @@ namespace Tunayy.Ecommerce.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Properties");
-
-            migrationBuilder.DropTable(
-                name: "Tests");
+                name: "PropertyValues");
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
@@ -1377,6 +1360,9 @@ namespace Tunayy.Ecommerce.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Properties");
         }
     }
 }

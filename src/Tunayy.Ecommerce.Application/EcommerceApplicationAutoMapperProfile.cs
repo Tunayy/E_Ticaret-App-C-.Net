@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Tunayy.Ecommerce.Categories;
 using Tunayy.Ecommerce.Images;
+
 using Tunayy.Ecommerce.Products;
+using Tunayy.Ecommerce.ProductVariantImages;
+using Tunayy.Ecommerce.ProductVariants;
 using Tunayy.Ecommerce.Properties;
+using Tunayy.Ecommerce.PropertyValues;
 using Tunayy.Ecommerce.Tables;
 using Tunayy.Ecommerce.Tests;
 using Tunayy.Ecommerce.TestTwos;
@@ -34,7 +38,9 @@ public class EcommerceApplicationAutoMapperProfile : Profile
         CreateMap<Product, ProductListDto>().ReverseMap();
         CreateMap<CreateProductInputDto, Product>();
         CreateMap<UpdateProductInputDto, Product>();
-        CreateMap<ProductProperty, ProductPropertyDto>().ReverseMap();
+        CreateMap<ProductPropertyValue, ProductPropertyDto>().ReverseMap();
+
+
 
         CreateMap<Image, ImageDto>().ReverseMap();
         CreateMap<Image, ImageListDto>().ReverseMap();
@@ -45,5 +51,23 @@ public class EcommerceApplicationAutoMapperProfile : Profile
         CreateMap<Property, PropertyListDto>().ReverseMap();
         CreateMap<CreatePropertyInputDto, Property>();
         CreateMap<UpdatePropertyInputDto, Property>();
+
+        CreateMap<PropertyValue, PropertyValueDto>().ReverseMap();
+        CreateMap<PropertyValue, PropertyValueListDto>().ReverseMap();
+        CreateMap<CreatePropertyValueInputDto, PropertyValue>();
+        CreateMap<UpdatePropertyValueInputDto, PropertyValue>();
+
+        CreateMap<ProductVariant, VariantDto>().ReverseMap();
+        CreateMap<ProductVariant, VariantListDto>().ReverseMap();
+        CreateMap<CreateVariantInputDto, ProductVariant>();
+        CreateMap<UpdateVariantInputDto, ProductVariant>();
+
+        CreateMap<ProductVariantImage, VariantImageDto>().ReverseMap();
+        CreateMap<ProductVariantImage, VariantImageListDto>().ReverseMap();
+        CreateMap<CreateVariantImageInputDto, ProductVariantImage>();
+        CreateMap<UpdateVariantImageInputDto, ProductVariantImage>();
+
+
+
     }
 }

@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Tunayy.Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceDbContext))]
-    [Migration("20240719130415_mig1")]
-    partial class mig1
+    [Migration("20240729135331_variantimagemig")]
+    partial class variantimagemig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,12 +181,15 @@ namespace Tunayy.Ecommerce.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductProperty", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductPropertyValue", b =>
                 {
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PropertyValueId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationTime")
@@ -222,11 +225,121 @@ namespace Tunayy.Ecommerce.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.HasKey("ProductId", "PropertyId");
+                    b.HasKey("ProductId", "PropertyId", "PropertyValueId");
 
                     b.HasIndex("PropertyId");
 
+                    b.HasIndex("PropertyValueId");
+
                     b.ToTable("ProductsProperties");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductVariants");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariantImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("ProductVariantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("ProductVariantImages");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Property", b =>
@@ -273,7 +386,7 @@ namespace Tunayy.Ecommerce.Migrations
                     b.ToTable("Properties");
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.Test", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.PropertyValue", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -308,65 +421,18 @@ namespace Tunayy.Ecommerce.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<string>("Name")
+                    b.Property<Guid>("PropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PropertyValueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Tests");
-                });
+                    b.HasIndex("PropertyId");
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.TestTwo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("TestTwos");
+                    b.ToTable("PropertyValues");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -2196,34 +2262,64 @@ namespace Tunayy.Ecommerce.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductProperty", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductPropertyValue", b =>
                 {
                     b.HasOne("Tunayy.Ecommerce.Tables.Product", "Product")
                         .WithMany("Properties")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tunayy.Ecommerce.Tables.Property", "Property")
                         .WithMany("Products")
                         .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Tunayy.Ecommerce.Tables.PropertyValue", "PropertyValue")
+                        .WithMany("PropertyValues")
+                        .HasForeignKey("PropertyValueId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
 
                     b.Navigation("Property");
+
+                    b.Navigation("PropertyValue");
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.TestTwo", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariant", b =>
                 {
-                    b.HasOne("Tunayy.Ecommerce.Tables.Test", "Test")
-                        .WithMany("TestTwos")
-                        .HasForeignKey("TestId")
+                    b.HasOne("Tunayy.Ecommerce.Tables.Product", "Product")
+                        .WithMany("productVariants")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Test");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariantImage", b =>
+                {
+                    b.HasOne("Tunayy.Ecommerce.Tables.ProductVariant", "ProductVariant")
+                        .WithMany("ProductVariantImages")
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductVariant");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.PropertyValue", b =>
+                {
+                    b.HasOne("Tunayy.Ecommerce.Tables.Property", "Property")
+                        .WithMany("PropertyValues")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2380,16 +2476,25 @@ namespace Tunayy.Ecommerce.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Properties");
+
+                    b.Navigation("productVariants");
+                });
+
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.ProductVariant", b =>
+                {
+                    b.Navigation("ProductVariantImages");
                 });
 
             modelBuilder.Entity("Tunayy.Ecommerce.Tables.Property", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("PropertyValues");
                 });
 
-            modelBuilder.Entity("Tunayy.Ecommerce.Tables.Test", b =>
+            modelBuilder.Entity("Tunayy.Ecommerce.Tables.PropertyValue", b =>
                 {
-                    b.Navigation("TestTwos");
+                    b.Navigation("PropertyValues");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

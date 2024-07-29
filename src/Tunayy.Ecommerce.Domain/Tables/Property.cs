@@ -11,6 +11,10 @@ namespace Tunayy.Ecommerce.Tables
     {
         public string PropertyName { get; set; }
 
-        public ICollection<ProductProperty> Products { get; set; }
+        public List<ProductPropertyValue> Products { get; set; }
+
+        public List<PropertyValue> PropertyValues { get; set; }
+
+        
     }
 }

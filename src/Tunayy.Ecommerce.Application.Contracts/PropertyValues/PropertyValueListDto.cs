@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tunayy.Ecommerce.Products
+namespace Tunayy.Ecommerce.PropertyValues
 {
-    public class CreateProductPropertyInputDto
+    public class PropertyValueListDto
     {
-        public Guid ProductId { get; set; }
+        public Guid Id { get; set; }
+        public string PropertyValueName { get; set; }
         public Guid PropertyId { get; set; }
-
-        public Guid PropertyValueId { get; set; }
     }
 }

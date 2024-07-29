@@ -26,8 +26,6 @@ namespace Tunayy.Ecommerce.Categories
                 .ThenInclude(p => p.Products)
                 .ThenInclude(p => p.Images); 
 
-
-
             var result = await query.FirstOrDefaultAsync(i => i.Id == id);
             return result!;
         }
